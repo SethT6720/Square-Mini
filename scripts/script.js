@@ -284,6 +284,8 @@ function spawnProjectile() {
 
 function onDeath() {
   square.health = square.maxHealth;
+  square.x = canvas.center.x;
+  square.y = canvas.center.y;
   game.inGame = false;
   deadScore.innerText = game.score;
   game.scoreTotal += score;
