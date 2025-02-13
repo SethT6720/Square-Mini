@@ -2,6 +2,9 @@
 import help from './helpers.js';
 const { get, hide, show, buttonClick, sleep } = help;
 
+//Import storage stuff
+import storage from './storage.js';
+const { save, load } = storage;
 
 // Divs/elements
 const opaqueBackground = get("opaqueBackground");
@@ -24,7 +27,6 @@ let canvas = {
 
   height: window.innerHeight,
   width: window.innerWidth,
-
 };
 
 //Set canvas dimensions
@@ -81,6 +83,13 @@ let game =  {
   highScore: 0,
   score: 0
 };
+
+//Get/Establish high score from localStorage
+if (!load("highScore")) {
+  save("highScore", "0");
+} else {
+  game.highScore = Number(load("highScore"))
+}
 
 
 class thingy { //class constructor for the 'square'. only reason i did this was to make calculations easier and to use this.blablabla
@@ -292,6 +301,7 @@ function onDeath() {
   if (game.score > game.highScore) {
     game.highScore = game.score;
   }
+  save("highScore", game.highScore.toString());
   highScore.innerText = game.highScore;
   game.score = 0;
   canvas.init();
